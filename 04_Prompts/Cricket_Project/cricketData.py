@@ -1,0 +1,43 @@
+from langchain_huggingface import HuggingFaceEmbeddings
+
+
+# embedding = HuggingFaceEmbeddings(model_name ="sentence-transformers/all-MiniLM-L6-v2")
+
+cricket_players_info = [
+    "Virat Kohli is a former Indian captain and one of the greatest modern batsmen. He is known for his aggressive style and consistency across all formats. Kohli is the highest run-scorer in IPL and among top in international cricket.",
+    "Sachin Tendulkar is known as the God of Cricket and has over 34,000 international runs. He was the first player to score a double hundred in ODIs. Tendulkar represented India for 24 years and won the 2011 World Cup.",
+    "MS Dhoni is India’s most successful captain, having led the team to all three major ICC trophies. He is known for calmness and finishing abilities. Dhoni also captained Chennai Super Kings to five IPL titles.",
+    "Rohit Sharma is nicknamed Hitman and is known for his elegant strokeplay. He is the only player with three double centuries in ODIs. Rohit currently leads both India and Mumbai Indians.",
+    "Jasprit Bumrah is India’s pace spearhead known for deadly yorkers and accuracy. He has an unorthodox action and a calm temperament. Bumrah is a match-winner across all formats.",
+    "R Ashwin is India’s most successful off-spinner in Tests in the modern era. He is known for variations and sharp cricketing intellect. Ashwin has taken more than 500 international wickets.",
+    "KL Rahul is a stylish opener who can also keep wickets and bat in various positions. He is known for his composure and clean technique. Rahul plays for LSG in IPL and represents India in all formats.",
+    "Rishabh Pant is an aggressive wicketkeeper-batsman known for fearless hitting. He played a historic knock at the Gabba in 2021. Pant is recovering from an accident and is expected to return stronger.",
+    "Shubman Gill is touted as the next big thing in Indian cricket. He scored a double century in ODIs and a century in IPL 2023 final. Gill is admired for his timing and elegant shots.",
+    "Hardik Pandya is an all-rounder and aggressive finisher with sharp fielding skills. He captained Gujarat Titans to an IPL win in 2022. Pandya plays a key role as a seam-bowling all-rounder for India.",
+    "Babar Azam is Pakistan’s most consistent batsman across formats. He is known for elegant strokeplay and calmness under pressure. Babar is a former captain and top-ranked ODI player.",
+    "Shaheen Afridi is a left-arm pacer known for swing and early breakthroughs. He was the Man of the Match in the 2022 Asia Cup final. Shaheen is a vital part of Pakistan's pace attack.",
+    "Mohammad Rizwan is a reliable wicketkeeper-batsman and consistent performer. He is known for anchoring innings and quick running. Rizwan has formed a successful T20 pair with Babar Azam.",
+    "David Warner is an explosive Australian opener with multiple Orange Caps in IPL. He has played key roles in Australia’s World Cup wins. Warner is known for aggressive starts and consistency.",
+    "Steve Smith is an unorthodox but prolific Australian Test batsman. He has a high average and exceptional technique. Smith also delivered crucial World Cup performances.",
+    "Pat Cummins is Australia’s Test captain and top fast bowler. He is known for pace, bounce, and calm leadership. Cummins led Australia to WTC and ODI World Cup victories in 2023.",
+    "Glenn Maxwell is an Australian all-rounder known for innovative and explosive batting. He is a game-changer in limited-overs cricket. Maxwell excels in IPL and global T20 leagues.",
+    "Ben Stokes is England’s premier all-rounder and 2019 World Cup hero. He delivers under pressure with both bat and ball. Stokes also led England to the T20 World Cup 2022 win.",
+    "Joe Root is an elegant middle-order batsman and former England Test captain. He is known for consistency and classical technique. Root has scored over 10,000 Test runs.",
+    "Jofra Archer is a fast bowler known for raw pace and deadly bouncers. He starred in England’s 2019 World Cup campaign. Archer’s career has been slowed by recurring injuries.",
+    "Kane Williamson is New Zealand’s classy batsman and inspirational captain. He is known for his composure and technique. Williamson led New Zealand to a WTC win in 2021.",
+    "Trent Boult is a left-arm fast bowler known for swing and early wickets. He is a regular performer in both IPL and World Cups. Boult is among New Zealand’s top wicket-takers.",
+    "Rashid Khan is Afghanistan’s biggest cricket star and a top leg-spinner. He is known for tight economy and wicket-taking ability. Rashid shines in IPL and T20 leagues worldwide.",
+    "Mujeeb Ur Rahman is a young Afghan spinner with mystery variations. He plays crucial roles in global T20 leagues. Mujeeb forms a strong spin duo with Rashid Khan.",
+    "Shakib Al Hasan is Bangladesh’s best all-rounder and most experienced cricketer. He leads in runs and wickets for the country. Shakib has excelled in international and franchise cricket.",
+    "Liton Das is a stylish batsman and wicketkeeper from Bangladesh. He is known for providing strong starts in white-ball games. Liton is the team’s vice-captain and regular opener.",
+    "Dinesh Karthik is a veteran Indian wicketkeeper known for finishing games. He made a dramatic comeback with RCB in IPL. Karthik is remembered for his Nidahas Trophy final six.",
+    "Suryakumar Yadav is an explosive middle-order batsman in T20s. He is famous for 360-degree strokeplay and improvisation. Surya was ICC T20I Player of the Year in 2022.",
+    "Yuzvendra Chahal is India’s leading wicket-taker in IPL history. He is a clever leg-spinner with consistent performances. Chahal is a key bowler in India’s T20 setup.",
+    "Andre Russell is a West Indian all-rounder known for brutal power hitting. He can change games in a few balls with bat or ball. Russell is a match-winner for KKR in the IPL."
+]
+
+# doc_embeddings = embedding.embed_documents(cricket_players_info)
+
+
+# with open("vectors.py", "w") as f:
+#     f.write(f" Vectors = {repr(doc_embeddings)}\n")
