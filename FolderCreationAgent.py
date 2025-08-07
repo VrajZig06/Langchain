@@ -27,6 +27,13 @@ def createFolderAndFiles(foldername:str,files:List[str]):
     shellTool.invoke(f"mkdir {foldername}")
     shellTool.invoke(f"cd {foldername} && touch {' '.join([file for file in files])}")
 
+@tool
+def OpenFileAndWrite(filepath:str,data:str):
+    """
+    This function opens a specified file and writes the given text content to it using shell commands. It appends the text if the file exists, or creates the file if it doesn't.
+    """
+    shellTool.invoke(f"echo {data} >> {filepath}")
+
     
 
 llm = HuggingFaceEndpoint(
@@ -45,8 +52,7 @@ pydanticParser = PydanticOutputParser(pydantic_object=Output)
 templet = PromptTemplate(
     template="""
         You are a Good Understanding Model.
-        You need to extract foldername and Files list from following user Query
-
+        
         Query : {query}
 
     """,
@@ -56,13 +62,17 @@ templet = PromptTemplate(
 query = input("Enter Your Command Here : - ")
 
 # Model Binding
-llm_with_tools = model.bind_tools([createFolder,createFolderAndFiles])
+all_tools = [createFolder,createFolderAndFiles,OpenFileAndWrite]
+llm_with_tools = model.bind_tools(all_tools)
 
 chain = templet | llm_with_tools
 result = chain.invoke(query)
+print(result)
 tool_calls = result.tool_calls
 
-if len(tool_calls):
+print(tool_calls)
+
+if len(tool_calls) > 0:
     for tool in tool_calls:
         if tool['name'] == "createFolderAndFiles":
             createFolderAndFiles.invoke(tool)
@@ -70,6 +80,8 @@ if len(tool_calls):
         if tool['name'] == "createFolder":
             createFolder.invoke(tool)
         
+        if tool['name'] == "OpenFileAndWrite":
+            OpenFileAndWrite.invoke(tool)
 
 
 
