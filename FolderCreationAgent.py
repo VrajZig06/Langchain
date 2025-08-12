@@ -37,7 +37,8 @@ def OpenFileAndWrite(filepath:str,data:str):
     
 
 llm = HuggingFaceEndpoint(
-    repo_id="Qwen/Qwen3-Coder-480B-A35B-Instruct",
+    # repo_id="Qwen/Qwen3-Coder-480B-A35B-Instruct",
+    repo_id="openai/gpt-oss-120b",
     task="text-generation",
     max_new_tokens=100)
 
@@ -70,7 +71,7 @@ result = chain.invoke(query)
 print(result)
 tool_calls = result.tool_calls
 
-print(tool_calls)
+# print(tool_calls)
 
 if len(tool_calls) > 0:
     for tool in tool_calls:

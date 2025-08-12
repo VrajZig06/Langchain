@@ -6,6 +6,7 @@ from langchain.schema import HumanMessage
 from langchain_core.tools import InjectedToolArg
 import requests
 import json
+import streamlit as st
 
 from typing import Annotated
 
@@ -47,42 +48,49 @@ model_with_llm = model.bind_tools([getConversionRate,ConvertCurrency])
 messages = []
 
 # query = input("Enter Your Query regarding to convert Currency :- ")
-query = "What is the Currency Conversion rate for USD and Convert Currency from 30000 USD to INR"
+# query = "What is the Currency Conversion rate for USD and Convert Currency from 30000 USD to INR"
+query = st.text_input("Enter Here")
+btn = st.button("Ask")
 
-messages.append(HumanMessage(content=query))
+if btn:
+    messages.append(HumanMessage(content=query))
 
-result = model_with_llm.invoke(messages)
-messages.append(result)
+    result = model_with_llm.invoke(messages)
+    messages.append(result)
 
-if len(result.tool_calls) > 0:
-    for tool in result.tool_calls:
-        if tool['name'] == "getConversionRate":
-            response = getConversionRate.invoke(tool)
-            conversion_rate = json.loads(response.content)['conversion_rate']
-            messages.append(response.content)
+    if len(result.tool_calls) > 0:
+        for tool in result.tool_calls:
+            if tool['name'] == "getConversionRate":
+                response = getConversionRate.invoke(tool)
+                conversion_rate = json.loads(response.content)['conversion_rate']
+                messages.append(response.content)
 
-        if tool['name'] == "ConvertCurrency":
-            tool['args']['currency_rate'] = conversion_rate
-            result = ConvertCurrency.invoke(tool)
-            messages.append(result)
+            if tool['name'] == "ConvertCurrency":
+                tool['args']['currency_rate'] = conversion_rate
+                result = ConvertCurrency.invoke(tool)
+                messages.append(result)
 
-final_result = model_with_llm.invoke(messages)
+    final_result = model_with_llm.invoke(messages)
+    if final_result.content == "":
+        st.write("AI : Sorry Can you Try Again!")
+    else:
+        st.write("AI : ",final_result.content)
 
-print(final_result.content)
+    # print(final_result.content)
 
 
-"""
---> OUTPUT
-(venv) ztlab141@ztlab141 Langchain Models % python3 13_Tool_Calling/02_Real_Time_Currency_Convertor.py
-    Enter Your Query regarding to convert Currency :- How much 250 USD to INR
-    The conversion rate from USD to INR is 87.8403. 
+# """
+# --> OUTPUT
+# (venv) ztlab141@ztlab141 Langchain Models % python3 13_Tool_Calling/02_Real_Time_Currency_Convertor.py
+#     Enter Your Query regarding to convert Currency :- How much 250 USD to INR
+#     The conversion rate from USD to INR is 87.8403. 
 
-    Now, let's convert 250 USD to INR.
+#     Now, let's convert 250 USD to INR.
 
-    250 USD * 87.8403 INR/USD = 21960.075 INR.  
+#     250 USD * 87.8403 INR/USD = 21960.075 INR.  
 
-    So, 250 USD is approximately 21960.08 INR.
+#     So, 250 USD is approximately 21960.08 INR.
 
-"""
+# """
 
 

@@ -1,5 +1,5 @@
 from langchain_community.document_loaders import YoutubeLoader
-from youtube_transcript_api import YouTubeTranscriptApi
+from youtube_transcript_api import YouTubeTranscriptApi 
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings,HuggingFaceEndpoint,ChatHuggingFace
 from langchain_chroma import Chroma
