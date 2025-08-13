@@ -24,7 +24,6 @@ os.environ['LANGSMITH_API_KEY'] = os.getenv('LANGSMITH_API_KEY', '')
 # Hugging Face LLM Model
 llm = HuggingFaceEndpoint(
     repo_id="mistralai/Mistral-7B-Instruct-v0.2",
-    huggingfacehub_api_token="ADD YOUR KEY",
     task="text-generation",
     temperature=0.7,  # Reduced from 1.8 for better consistency
     max_new_tokens=100,  # Increased from 10 for proper responses
