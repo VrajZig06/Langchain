@@ -1,4 +1,4 @@
-from mcp.server.fastmcp import FastMCP
+from fastmcp import FastMCP
 from langchain_community.tools import WikipediaQueryRun
 from langchain_community.utilities import WikipediaAPIWrapper
 
@@ -17,4 +17,4 @@ async def latest_news(topic:str) -> str:
     return response
 
 if __name__ == "__main__":
-    MCPServer.run(transport="streamable-http")
+    MCPServer.run(transport="streamable-http",host="127.0.0.1", port=8000)

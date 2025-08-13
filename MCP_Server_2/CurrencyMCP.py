@@ -1,4 +1,4 @@
-from mcp.server.fastmcp import FastMCP
+from fastmcp import FastMCP
 import requests
 
 MCPServer2 = FastMCP("CurrencyConvertor")
@@ -21,5 +21,5 @@ async def convert_currency(base_country_code:str,target_country_code:str,amount:
 
 
 if __name__ == "__main__":
-    MCPServer2.run(transport = "streamable-http")
+    MCPServer2.run(transport = "streamable-http",host="127.0.0.1", port=9000)
 

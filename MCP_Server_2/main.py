@@ -9,6 +9,12 @@ llm = HuggingFaceEndpoint(
     task="text-generation",
     max_new_tokens=100)
 
+
+def separator(number:int,data):
+    print(f"\n-------------- Response {number} --------------\n")
+    print(data)
+    print(f"\n-------------- ************** --------------\n")
+
 async def main():
     client = MultiServerMCPClient(
         {
@@ -17,10 +23,10 @@ async def main():
                 "args" : ['MCP_Server_2/MathMCP.py'],
                 "transport" : "stdio"
             },
-            # "currency" : {
-            #     "url" : "http://127.0.0.1:8000/mcp",
-            #     "transport" : "streamable_http"
-            # },
+            "currency" : {
+                "url" : "http://127.0.0.1:9000/mcp",
+                "transport" : "streamable_http"
+            },
             "latestNews" : {
                 "url" : "http://127.0.0.1:8000/mcp",
                 "transport" : "streamable_http"
@@ -36,35 +42,38 @@ async def main():
     )
 
     #  -------- Agent 1 ---------
-    # response = await agent.ainvoke(
-    #     {
-    #         "messages" : [{"role" : 'user',"content" :"what's (2+3) * 4?"}],
-    #         "tool_calls" : True,
-    #         "tool_choice" : "auto",
-    #     }
-    # )
-
-    # print("Math Response",response['messages'][-1].content)
-
-    #  -------- Agent 2 ---------
-    # response = await agent.ainvoke({
-    #         "messages" : [{"role" : 'user',"content" :"convert currency 10 USD to INR"}],
-    #         "tool_calls" : True,
-    #         "tool_choice" : "auto",
-    #     })
-    
-    # print("Currency Response",response['messages'][-1].content)
-
-    #  -------- Agent 3 ---------
     response = await agent.ainvoke(
         {
-            "messages" : [{"role" : 'user',"content" :"Artificial Intelligence"}],
+            "messages" : [{"role" : 'user',"content" :"what's (2+3) * 4?"}],
             "tool_calls" : True,
             "tool_choice" : "auto",
         }
     )
 
-    print("Wikipedia Response",response['messages'][-1].content)
+    data = response['messages'][-1].content
+    separator(1,data)
+
+    #  -------- Agent 2 ---------
+    response = await agent.ainvoke({
+            "messages" : [{"role" : 'user',"content" :"convert currency amount 1 from USD to INR"}],
+            "tool_calls" : True,
+            "tool_choice" : "auto",
+        })
+    
+    data = response['messages'][-1].content
+    separator(2,data)
+
+    #  -------- Agent 3 ---------
+    response = await agent.ainvoke(
+        {
+            "messages" : [{"role" : 'user',"content" :"Tell me About Next future tech in World."}],
+            "tool_calls" : True,
+            "tool_choice" : "auto",
+        }
+    )
+
+    data = response['messages'][-1].content
+    separator(3,data)
 
 if __name__ == "__main__":
     try:
